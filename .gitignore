@@ -1,4 +1,4 @@
-.pro.*
+*.pro.*
 
 # Windows image file caches
 Thumbs.db
