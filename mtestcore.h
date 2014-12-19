@@ -13,11 +13,13 @@ public:
     ~MTestCore();
 
 signals:
+    void checkStatistics(void);
 
 protected:
     void run();
 
 public slots:
+    void checkStatisticsSlot(void);
 
 private:
     MTestServer * m_server;

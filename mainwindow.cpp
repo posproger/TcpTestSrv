@@ -12,10 +12,18 @@ MainWindow::MainWindow(QWidget *parent) :
     m_core = new MTestCore();
     m_core->moveToThread(m_core);
     //connect(m_core,SIGNAL(),this,SLOT());
+    connect(this,SIGNAL(checkStatistics()),m_core,SLOT(checkStatisticsSlot()));
     m_core->start();
+
+    connect(ui->pbStart,SIGNAL(clicked()),this,SLOT(checkStatisticsSlot()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::checkStatisticsSlot(void) {
+    emit checkStatistics();
+}
+

@@ -16,6 +16,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void checkStatisticsSlot(void);
+
+signals:
+    void checkStatistics(void);
+
 private:
     Ui::MainWindow *ui;
     MTestCore * m_core;

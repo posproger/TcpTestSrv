@@ -2,6 +2,7 @@
 
 MTestCore::MTestCore() {
     m_server = new MTestServer();
+    connect(this,SIGNAL(checkStatistics()),m_server,SLOT(checkStatisticsSlot()));
 }
 
 MTestCore::~MTestCore() {
@@ -13,4 +14,8 @@ MTestCore::~MTestCore() {
 
 void MTestCore::run() {
     exec();
+}
+
+void MTestCore::checkStatisticsSlot(void) {
+    emit checkStatistics();
 }

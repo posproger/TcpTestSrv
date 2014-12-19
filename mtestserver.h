@@ -14,11 +14,13 @@ public:
     explicit MTestServer(QObject *parent = 0);
 
 signals:
+    void checkStatistics(void);
 
 protected:
     void incomingConnection(qintptr socketDescriptor);
 
 public slots:
+    void checkStatisticsSlot(void);
 
 private:
     QList<MTestThread*> m_clients;

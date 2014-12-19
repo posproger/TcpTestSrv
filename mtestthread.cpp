@@ -7,6 +7,7 @@ MTestThread::MTestThread(qintptr socketDescriptor) {
     connect(m_netManager,SIGNAL(newBinaryMessageReceived(QByteArray)),this,SLOT(newBinMsgFromClient(QByteArray)));
     connect(m_netManager,SIGNAL(socketDisconnected()),this,SLOT(socketDisconnected()));
 
+    m_err = 0;
     m_count = 0;
 }
 
@@ -28,11 +29,12 @@ void MTestThread::run() {
 }
 
 void MTestThread::newBinMsgFromClient(QByteArray in) {
+    ++m_count;
     QString zz;
     zz.append(in);
     if ( in.size()!=zz.size() ) {
-        ++m_count;
-        qlDebug() << "Size incorrect!" << in.size() << zz.size() << m_count;
+        ++m_err;
+        qlDebug() << "Size incorrect!" << in.size() << zz.size() << m_err;
         QByteArray zz1;
         for ( int i=0; i<60000; ++i ) {
             zz1.append("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789\r\n");
@@ -47,3 +49,6 @@ void MTestThread::socketDisconnected() {
     ;
 }
 
+void MTestThread::checkStatistics(void) {
+    qlDebug() << "Total:" << m_count << "Errors:" << m_err;
+}

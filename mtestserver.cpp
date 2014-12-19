@@ -16,6 +16,11 @@ void MTestServer::incomingConnection(qintptr socketDescriptor) {
     MTestThread * client = new MTestThread(socketDescriptor);
     m_clients.append(client);
     client->moveToThread(client);
+    connect(this,SIGNAL(checkStatistics()),client,SLOT(checkStatistics()));
     client->start();
+}
+
+void MTestServer::checkStatisticsSlot(void) {
+    emit checkStatistics();
 }
 

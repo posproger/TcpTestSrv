@@ -22,12 +22,14 @@ protected:
 public slots:
     void newBinMsgFromClient(QByteArray in);
     void socketDisconnected();
+    void checkStatistics(void);
 
 private:
     qintptr m_socketDescriptor;
     QTcpSocket * m_socket;
     QLClientNetManager * m_netManager;
     int m_count;
+    int m_err;
 
 };
 
