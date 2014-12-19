@@ -27,6 +27,7 @@ private:
     qintptr m_socketDescriptor;
     QTcpSocket * m_socket;
     QLClientNetManager * m_netManager;
+    int m_count;
 
 };
 
