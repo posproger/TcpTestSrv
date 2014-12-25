@@ -6,9 +6,12 @@ MTestThread::MTestThread(qintptr socketDescriptor) {
     m_netManager = new QLClientNetManager(0, 0);
     connect(m_netManager,SIGNAL(newBinaryMessageReceived(QByteArray)),this,SLOT(newBinMsgFromClient(QByteArray)));
     connect(m_netManager,SIGNAL(socketDisconnected()),this,SLOT(socketDisconnected()));
+    connect(m_netManager,SIGNAL(binaryMessageSent(quint32)),this,SLOT(binaryMessageSent(quint32)));
 
     m_err = 0;
     m_count = 0;
+
+    m_packetN = 1000000;
 }
 
 MTestThread::~MTestThread() {
@@ -39,9 +42,9 @@ void MTestThread::newBinMsgFromClient(QByteArray in) {
         for ( int i=0; i<60000; ++i ) {
             zz1.append("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789\r\n");
         }
-        m_netManager->sendBinaryMessage(zz1);
+        m_netManager->sendBinaryMessage(zz1, m_packetN++);
     } else {
-        m_netManager->sendBinaryMessage(in);
+        m_netManager->sendBinaryMessage(in, m_packetN++);
     }
 }
 
@@ -52,3 +55,8 @@ void MTestThread::socketDisconnected() {
 void MTestThread::checkStatistics(void) {
     qlDebug() << "Total:" << m_count << "Errors:" << m_err;
 }
+
+void MTestThread::binaryMessageSent(quint32 packetN) {
+    qlDebug() << packetN;
+}
+

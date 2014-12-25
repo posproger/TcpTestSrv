@@ -23,6 +23,7 @@ public slots:
     void newBinMsgFromClient(QByteArray in);
     void socketDisconnected();
     void checkStatistics(void);
+    void binaryMessageSent(quint32 packetN);
 
 private:
     qintptr m_socketDescriptor;
@@ -31,6 +32,7 @@ private:
     int m_count;
     int m_err;
 
+    quint32 m_packetN;
 };
 
 #endif // MTESTTHREAD_H
