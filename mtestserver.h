@@ -21,6 +21,7 @@ protected:
 
 public slots:
     void checkStatisticsSlot(void);
+    void clientDisconnected(void);
 
 private:
     QList<MTestThread*> m_clients;

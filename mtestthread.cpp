@@ -3,7 +3,7 @@
 
 MTestThread::MTestThread(qintptr socketDescriptor) {
     m_socketDescriptor = socketDescriptor;
-    m_netManager = new QLClientNetManager(0, 0, this);
+    m_netManager = new QLClientNetManager(0, this);
     connect(m_netManager,SIGNAL(newBinaryMessageReceived(QByteArray)),this,SLOT(newBinMsgFromClient(QByteArray)));
     connect(m_netManager,SIGNAL(socketDisconnected()),this,SLOT(socketDisconnected()));
     connect(m_netManager,SIGNAL(binaryMessageSent(quint32)),this,SLOT(binaryMessageSent(quint32)));
@@ -44,10 +44,6 @@ void MTestThread::newBinMsgFromClient(QByteArray in) {
     if ( in.size()!=zz.size() ) {
         ++m_err;
         qlDebug() << "Size incorrect!" << in.size() << zz.size() << m_err;
-//        QByteArray zz1;
-//        for ( int i=0; i<60000; ++i ) {
-//            zz1.append("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789\r\n");
-//        }
         m_netManager->sendBinaryMessage(zz1, m_packetN++);
     } else {
         m_netManager->sendBinaryMessage(in, m_packetN++);
@@ -59,7 +55,10 @@ void MTestThread::newBinMsgFromClient(QByteArray in) {
 }
 
 void MTestThread::socketDisconnected() {
-    ;
+    disconnect(m_netManager,SIGNAL(newBinaryMessageReceived(QByteArray)),this,SLOT(newBinMsgFromClient(QByteArray)));
+    disconnect(m_netManager,SIGNAL(socketDisconnected()),this,SLOT(socketDisconnected()));
+    disconnect(m_netManager,SIGNAL(binaryMessageSent(quint32)),this,SLOT(binaryMessageSent(quint32)));
+    delete(m_netManager);
 }
 
 void MTestThread::checkStatistics(void) {

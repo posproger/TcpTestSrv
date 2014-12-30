@@ -20,6 +20,10 @@ void MTestServer::incomingConnection(qintptr socketDescriptor) {
     client->start();
 }
 
+void MTestServer::clientDisconnected(void) {
+    ;
+}
+
 void MTestServer::checkStatisticsSlot(void) {
     emit checkStatistics();
 }
