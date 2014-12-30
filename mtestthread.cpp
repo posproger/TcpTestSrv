@@ -37,7 +37,7 @@ void MTestThread::newBinMsgFromClient(QByteArray in) {
     zz.append(in);
 
     QByteArray zz1;
-    for ( int i=0; i<60000; ++i ) {
+    for ( int i=0; i<60; ++i ) { // 60000
         zz1.append("0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789\r\n");
     }
 
